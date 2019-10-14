@@ -14,6 +14,7 @@
         integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
         integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <script src="script.js"></script>
     <title>Twitter APP</title>
 </head>
 
@@ -52,29 +53,9 @@
     <!-- READ TWEETS -->
     <div class="container" id="read">
         <?php 
-            if(isset($_SESSION['tweets']))
-                $tweets = $_SESSION['tweets'];
+            $tweets = $_SESSION['tweets'];
         ?>
-                <div class="h1 text-white">Read Tweets</div>
-                <?php 
-                foreach ( $tweets as $tweet ) { 
-                ?>
-                    <div class="card mt-2">
-                        <div class="card-body">
-                            <img class="rounded-circle" src="<?php echo $tweet['user']['profile_image_url']; ?>" />
-                            <a href="https://twitter.com/<?php echo $tweet['user']['screen_name']; ?>" target="_blank">
-                                <b><?php echo $tweet['user']['name']; ?> (@<?php echo $tweet['user']['screen_name']; ?>)</b>
-                            </a> tweeted:
-                            <br />
-                            <br />
-                            <?php echo $tweet['text']; ?>
-                            <br />
-                            <br />
-                            Tweeted on <?php echo $tweet['created_at']; ?>
-                            <br />
-                        </div>
-                    </div>
-            <?php } ?>
+        <div class="h1 text-white">Read Tweets</div>
     </div>
 
     <div style="margin-top:50px;"></div>
@@ -82,6 +63,7 @@
     <nav id="year" class="navbar navbar-nav fixed-bottom navbar-dark bg-secondary text-white"></nav>
 
     <!-- SCRIPTS -->
+
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
@@ -92,6 +74,11 @@
     </script>
 
     <script>
+
+        //get tweets for 'read tweets' section
+        let tweets = <?php echo json_encode($tweets);?> 
+        displayTweets(tweets);
+
         // Get the current year for the copyright
         $('#year').text("Zach Nelson ©" + new Date().getFullYear());
 
